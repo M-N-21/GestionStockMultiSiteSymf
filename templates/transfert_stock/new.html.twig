@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New TransfertStock{% endblock %}
+
+{% block body %}
+    <h1>Ajout Transfert de Stock</h1>
+
+    {{ include('transfert_stock/_form.html.twig') }}
+
+    <a href="{{ path('app_transfert_stock_index') }}">retour à la liste</a>
+{% endblock %}

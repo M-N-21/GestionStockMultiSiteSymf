@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Gestionnaire{% endblock %}
+
+{% block body %}
+    <h1>Gestionnaire</h1>
+
+    <table class="table">
+        <tbody>
+            {# <tr>
+                <th>Id</th>
+                <td>{{ gestionnaire.id }}</td>
+            </tr> #}
+            <tr>
+                <th>Nom</th>
+                <td>{{ gestionnaire.nom }}</td>
+            </tr>
+            <tr>
+                <th>Prenom</th>
+                <td>{{ gestionnaire.prenom }}</td>
+            </tr>
+            <tr>
+                <th>Date</th>
+                <td>{{ gestionnaire.date ? gestionnaire.date|date('d M Y') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Email</th>
+                <td>{{ gestionnaire.email }}</td>
+            </tr>
+            {# <tr>
+                <th>Password</th>
+                <td>{{ gestionnaire.password }}</td>
+            </tr> #}
+            <tr>
+                <th>Telephone</th>
+                <td>{{ gestionnaire.telephone }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_gestionnaire_index') }}">retour à la liste</a>
+
+    <a href="{{ path('app_gestionnaire_edit', {'id': gestionnaire.id}) }}">edit</a>
+
+    {{ include('gestionnaire/_delete_form.html.twig') }}
+{% endblock %}

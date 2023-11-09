@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Magasinier{% endblock %}
+
+{% block body %}
+    <h1>Ajout Magasinier</h1>
+
+    {{ include('magasinier/_form.html.twig') }}
+
+    <a href="{{ path('app_magasinier_index') }}">retour à la liste</a>
+{% endblock %}

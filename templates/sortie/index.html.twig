@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Sortie{% endblock %}
+
+{% block body %}
+    <h1>Liste des Sorties</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                {# <th>Id</th> #}
+                <th>Num_bs</th>
+                <th>QteSortie</th>
+                <th>Transfert</th>
+                <th>Prix</th>
+                <th>Date</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for sortie in sorties %}
+            <tr>
+                {# <td>{{ sortie.id }}</td> #}
+                <td>{{ sortie.numBs }}</td>
+                <td>{{ sortie.qteSortie }}</td>
+                <td>{{ sortie.transfert ? 'Yes' : 'No' }}</td>
+                <td>{{ sortie.prix }}</td>
+                <td>{{ sortie.date ? sortie.date|date('d-m-Y H:i:s') : '' }}</td>
+                <td>
+                    <a href="{{ path('app_sortie_show', {'id': sortie.id}) }}">voir</a>
+                    <a href="{{ path('app_sortie_edit', {'id': sortie.id}) }}">editer</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="7">Aucun enregistrement</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_sortie_new') }}">Create new</a>
+{% endblock %}

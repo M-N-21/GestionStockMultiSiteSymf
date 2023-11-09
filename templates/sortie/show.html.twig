@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Sortie{% endblock %}
+
+{% block body %}
+    <h1>Sortie</h1>
+
+    <table class="table">
+        <tbody>
+            {# <tr>
+                <th>Id</th>
+                <td>{{ sortie.id }}</td>
+            </tr> #}
+            <tr>
+                <th>Num_bs</th>
+                <td>{{ sortie.numBs }}</td>
+            </tr>
+            <tr>
+                <th>QteSortie</th>
+                <td>{{ sortie.qteSortie }}</td>
+            </tr>
+            <tr>
+                <th>Transfert</th>
+                <td>{{ sortie.transfert ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>Prix</th>
+                <td>{{ sortie.prix }}</td>
+            </tr>
+            <tr>
+                <th>Date</th>
+                <td>{{ sortie.date ? sortie.date|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_sortie_index') }}">retour à la liste</a>
+
+    <a href="{{ path('app_sortie_edit', {'id': sortie.id}) }}">edit</a>
+
+    {{ include('sortie/_delete_form.html.twig') }}
+{% endblock %}

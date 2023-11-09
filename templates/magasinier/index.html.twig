@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Magasinier {% endblock %}
+
+{% block body %}
+    <h1>Liste des Magasiniers </h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                {# <th>Id</th> #}
+                <th>Nom</th>
+                <th>Prenom</th>
+                <th>Date</th>
+                <th>Email</th>
+                {# <th>Password</th> #}
+                <th>Adresse</th>
+                <th>Magasin</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for magasinier in magasiniers %}
+            <tr>
+                {# <td>{{ magasinier.id }}</td> #}
+                <td>{{ magasinier.nom }}</td>
+                <td>{{ magasinier.prenom }}</td>
+                <td>{{ magasinier.date ? magasinier.date|date('d/m/Y') : '' }}</td>
+                <td>{{ magasinier.email }}</td>
+                {# <td>{{ magasinier.password }}</td> #}
+                <td>{{ magasinier.adresse }}</td>
+                <td>{{ magasinier.magasin }}</td>
+                <td>
+                    <a class="btn btn-primary" href="{{ path('app_magasinier_show', {'id': magasinier.id}) }}">show</a>
+                    <a class="btn btn-warning" href="{{ path('app_magasinier_edit', {'id': magasinier.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="8">Aucun enregistrement</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_magasinier_new') }}">Create new</a>
+{% endblock %}

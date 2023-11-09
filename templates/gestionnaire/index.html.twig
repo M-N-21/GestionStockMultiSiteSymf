@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Gestionnaire {% endblock %}
+
+{% block body %}
+    <h1>Liste des Gestionnaires </h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                {# <th>Id</th> #}
+                <th>Nom</th>
+                <th>Prenom</th>
+                <th>Date</th>
+                <th>Email</th>
+                {# <th>Password</th> #}
+                <th>Telephone</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for gestionnaire in gestionnaires %}
+            <tr>
+                {# <td>{{ gestionnaire.id }}</td> #}
+                <td>{{ gestionnaire.nom }}</td>
+                <td>{{ gestionnaire.prenom }}</td>
+                <td>{{ gestionnaire.date ? gestionnaire.date|date('d/m/Y') : '' }}</td>
+                <td>{{ gestionnaire.email }}</td>
+                {# <td>{{ gestionnaire.password }}</td> #}
+                <td>{{ gestionnaire.telephone }}</td>
+                <td>
+                    <a class="btn btn-primary" href="{{ path('app_gestionnaire_show', {'id': gestionnaire.id}) }}">show</a>
+                    <a class="btn btn-warning" href="{{ path('app_gestionnaire_edit', {'id': gestionnaire.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="8">Aucun enregistrement</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_gestionnaire_new') }}">Create new</a>
+{% endblock %}

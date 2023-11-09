@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Entree {% endblock %}
+
+{% block body %}
+    <h1>Liste des Entrees</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                {# <th>Id</th> #}
+                <th>Num_be</th>
+                <th>QteEntree</th>
+                <th>Transfert</th>
+                <th>Prix</th>
+                <th>Date</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for entree in entrees %}
+            <tr>
+                {# <td>{{ entree.id }}</td> #}
+                <td>{{ entree.numBe }}</td>
+                <td>{{ entree.qteEntree }}</td>
+                <td>{{ entree.transfert ? 'Yes' : 'No' }}</td>
+                <td>{{ entree.prix }}</td>
+                <td>{{ entree.date ? entree.date|date('d-m-Y H:i:s') : '' }}</td>
+                <td>
+                    <a class="btn btn-primary" href="{{ path('app_entree_show', {'id': entree.id}) }}">show</a>
+                    <a class="btn btn-warning" href="{{ path('app_entree_edit', {'id': entree.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="7">Aucun enregistrement</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_entree_new') }}">Create new</a>
+{% endblock %}

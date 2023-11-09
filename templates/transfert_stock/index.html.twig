@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}TransfertStock{% endblock %}
+
+{% block body %}
+    <h1>Liste des Transferts de Stock</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                {# <th>Id</th> #}
+                <th>Origine</th>
+                <th>Destionation</th>
+                <th>Date</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for transfert_stock in transfert_stocks %}
+            <tr>
+                <td>{{ transfert_stock.magasinOrigine }}</td>
+                <td>{{ transfert_stock.magasinDestination }}</td>
+                <td>{{ transfert_stock.date ? transfert_stock.date|date('Y-m-d H:i:s') : '' }}</td>
+                <td>
+                    <a href="{{ path('app_transfert_stock_show', {'id': transfert_stock.id}) }}">show</a>
+                    <a href="{{ path('app_transfert_stock_edit', {'id': transfert_stock.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">Aucun enregistrement</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_transfert_stock_new') }}">Create new</a>
+{% endblock %}

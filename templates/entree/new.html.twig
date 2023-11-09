@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Entree{% endblock %}
+
+{% block body %}
+    <h1>Ajout Entree</h1>
+
+    {{ include('entree/_form.html.twig') }}
+
+    <a href="{{ path('app_entree_index') }}">retour à la liste</a>
+{% endblock %}

@@ -1,16 +1,249 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
-        {% block stylesheets %}
-        {% endblock %}
+<html lang="en">
 
-        {% block javascripts %}
-        {% endblock %}
-    </head>
-    <body>
-        {% block body %}{% endblock %}
-    </body>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta name="description" content="Responsive Admin &amp; Dashboard Template based on Bootstrap 5">
+	<meta name="author" content="AdminKit">
+	<meta name="keywords" content="adminkit, bootstrap, bootstrap 5, admin, dashboard, template, responsive, css, sass, html, theme, front-end, ui kit, web">
+
+	<link rel="preconnect" href="https://fonts.gstatic.com">
+	<link rel="shortcut icon" href="{{ asset('img/icons/icon-48x48.png') }}" />
+
+	<link rel="canonical" href="https://demo-basic.adminkit.io/pages-blank.html" />
+
+	<title>Gestion Stock</title>
+
+	<link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+
+<body>
+	<div class="wrapper">
+		<nav id="sidebar" class="sidebar js-sidebar">
+			<div class="sidebar-content js-simplebar">
+				<a class="sidebar-brand" href="{{path('app_home')}}">
+                    <span class="align-middle">Gestion Stock</span>
+                </a>
+
+				<ul class="sidebar-nav">
+					<li class="sidebar-header">
+						Pages
+					</li>
+
+					<li class="sidebar-item active">
+						<a class="sidebar-link" href="{{path('app_home')}}">
+							<i class="align-middle " data-feather="sliders"></i> <span class="align-middle">Dashboard</span>
+						</a>
+					</li>
+					{% if is_granted('ROLE_MAGASINIER') %}
+					
+					<li class="sidebar-item">
+						<a class="sidebar-link" href="{{path('app_categorie_index')}}">
+							<i class="align-middle" data-feather="log-in"></i> <span class="align-middle">Categorie</span>
+						</a>
+					</li>
+					{% endif %}
+					{% if is_granted('ROLE_GESTIONNAIRE') %}
+					<li class="sidebar-item">
+						<a class="sidebar-link" href="{{path('app_magasin_index')}}">
+							<i class="align-middle" data-feather="log-in"></i> <span class="align-middle">Magasin</span>
+						</a>
+					</li>
+					{% endif %}
+					{% if is_granted('ROLE_MAGASINIER') %}
+					<li class="sidebar-item">
+						<a class="sidebar-link" href="{{path('app_produit_index')}}">
+							<i class="align-middle" data-feather="log-in"></i> <span class="align-middle">Produit</span>
+						</a>
+					</li>
+					{% endif %}
+
+					{% if is_granted('ROLE_MAGASINIER') %}
+					<li class="sidebar-item">
+						<a class="sidebar-link" href="{{path('app_entree_index')}}">
+							<i class="align-middle" data-feather="user-plus"></i> <span class="align-middle">Entree</span>
+						</a>
+					</li>
+
+					<li class="sidebar-item ">
+						<a class="sidebar-link" href="{{path('app_sortie_index')}}">
+							<i class="align-middle" data-feather="log-in"></i> <span class="align-middle">Sortie</span>
+						</a>
+					</li>
+					{% endif %}
+					{% if is_granted('ROLE_GESTIONNAIRE') %}
+					<li class="sidebar-item">
+						<a class="sidebar-link" href="{{path('app_transfert_stock_index')}}">
+							<i class="align-middle" data-feather="log-in"></i> <span class="align-middle">Transfert Stock</span>
+						</a>
+					</li>
+					
+					<li class="sidebar-item">
+						<a class="sidebar-link" href="{{path('app_gestionnaire_index')}}">
+							<i class="align-middle" data-feather="log-in"></i> <span class="align-middle">Gestionnaire</span>
+						</a>
+					</li>
+					<li class="sidebar-item">
+						<a class="sidebar-link" href="{{path('app_magasinier_index')}}">
+							<i class="align-middle" data-feather="log-in"></i> <span class="align-middle">Magasinier</span>
+						</a>
+					</li>
+					{% endif %}
+					{# <li class="sidebar-header">
+						Tools & Components
+					</li> #}
+
+					{# <li class="sidebar-item">
+						<a class="sidebar-link" href="ui-buttons.html">
+							<i class="align-middle" data-feather="square"></i> <span class="align-middle">Buttons</span>
+						</a>
+					</li> #}
+
+					{# <li class="sidebar-item">
+						<a class="sidebar-link" href="ui-forms.html">
+							<i class="align-middle" data-feather="check-square"></i> <span class="align-middle">Forms</span>
+						</a>
+					</li>
+
+					<li class="sidebar-item">
+						<a class="sidebar-link" href="ui-cards.html">
+							<i class="align-middle" data-feather="grid"></i> <span class="align-middle">Cards</span>
+						</a>
+					</li>
+
+					<li class="sidebar-item">
+						<a class="sidebar-link" href="ui-typography.html">
+							<i class="align-middle" data-feather="align-left"></i> <span class="align-middle">Typography</span>
+						</a>
+					</li>
+
+					<li class="sidebar-item">
+						<a class="sidebar-link" href="icons-feather.html">
+							<i class="align-middle" data-feather="coffee"></i> <span class="align-middle">Icons</span>
+						</a>
+					</li>
+
+					<li class="sidebar-header">
+						Plugins & Addons
+					</li>
+
+					<li class="sidebar-item">
+						<a class="sidebar-link" href="charts-chartjs.html">
+              				<i class="align-middle" data-feather="bar-chart-2"></i> <span class="align-middle">Charts</span>
+            			</a>
+					</li>
+
+					<li class="sidebar-item">
+						<a class="sidebar-link" href="maps-google.html">
+							<i class="align-middle" data-feather="map"></i> <span class="align-middle">Maps</span>
+						</a>
+					</li> #}
+				</ul>
+			</div>
+		</nav>
+
+		<div class="main">
+			<nav class="navbar navbar-expand navbar-light navbar-bg">
+				<a class="sidebar-toggle js-sidebar-toggle">
+					<i class="hamburger align-self-center"></i>
+				</a>
+
+				<div class="navbar-collapse collapse">
+					<ul class="navbar-nav navbar-align">
+						<li class="nav-item dropdown">
+							{# <a class="nav-icon dropdown-toggle d-inline-block d-sm-none" href="#" data-bs-toggle="dropdown">
+								<i class="align-middle" data-feather="settings"></i>
+							</a> #}
+
+							<a class="nav-link dropdown-toggle d-none d-sm-inline-block" href="#" data-bs-toggle="dropdown">
+                            {% if app.user %}
+                                <i class="align-middle" data-feather="settings"></i> <span class="text-dark">{{app.user.email}}</span></a>          
+                            {% endif %}
+							<div class="dropdown-menu dropdown-menu-end">
+								<a class="dropdown-item" href="#"><i class="align-middle me-1" data-feather="user"></i> Profile</a>
+								{# <a class="dropdown-item" href="#"><i class="align-middle me-1" data-feather="pie-chart"></i> Analytics</a>
+								<div class="dropdown-divider"></div>
+								<a class="dropdown-item" href="index.html"><i class="align-middle me-1" data-feather="settings"></i> Settings & Privacy</a>
+								<a class="dropdown-item" href="#"><i class="align-middle me-1" data-feather="help-circle"></i> Help Center</a> #}
+								<div class="dropdown-divider"></div>
+								<a class="dropdown-item" href="{{ path('app_logout') }}">Se Deconnecter</a>
+							</div>
+						</li>
+					</ul>
+				</div>
+			</nav>
+
+			<main class="content">
+				<div class="container-fluid p-0">
+
+					{# <h1 class="h3 mb-3">Blank Page</h1> #}
+
+					<div class="row">
+						<div class="col-12">
+                            {% for message in app.flashes('error') %}
+                                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                    {{ message }}
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                </div>
+                            {% endfor %}
+                            {% for message in app.flashes('success') %}
+                                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                    {{ message }}
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                </div>
+                            {% endfor %}
+                            {% block body %}
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h5 class="card-title mb-0">Empty card</h5>
+                                    </div>
+                                    <div class="card-body">
+                                    </div>
+                                </div>
+                            {% endblock %}
+						</div>
+					</div>
+
+				</div>
+			</main>
+
+			<footer class="footer">
+				<div class="container-fluid">
+					<div class="row text-muted">
+						<div class="col-6 text-start">
+							<p class="mb-0">
+								<a class="text-muted" href="https://adminkit.io/" target="_blank"><strong>AdminKit</strong></a> - <a class="text-muted" href="https://adminkit.io/" target="_blank"><strong>Bootstrap Admin Template</strong></a>								&copy;
+							</p>
+						</div>
+						<div class="col-6 text-end">
+							<ul class="list-inline">
+								<li class="list-inline-item">
+									<a class="text-muted" href="https://adminkit.io/" target="_blank">Support</a>
+								</li>
+								<li class="list-inline-item">
+									<a class="text-muted" href="https://adminkit.io/" target="_blank">Help Center</a>
+								</li>
+								<li class="list-inline-item">
+									<a class="text-muted" href="https://adminkit.io/" target="_blank">Privacy</a>
+								</li>
+								<li class="list-inline-item">
+									<a class="text-muted" href="https://adminkit.io/" target="_blank">Terms</a>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</footer>
+		</div>
+	</div>
+
+	<script src="{{asset('js/app.js')}}"></script>
+
+</body>
+
 </html>

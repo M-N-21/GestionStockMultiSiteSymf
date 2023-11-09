@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Magasinier{% endblock %}
+
+{% block body %}
+    <h1>Magasinier</h1>
+
+    <table class="table">
+        <tbody>
+            {# <tr>
+                <th>Id</th>
+                <td>{{ magasinier.id }}</td>
+            </tr> #}
+            <tr>
+                <th>Nom</th>
+                <td>{{ magasinier.nom }}</td>
+            </tr>
+            <tr>
+                <th>Prenom</th>
+                <td>{{ magasinier.prenom }}</td>
+            </tr>
+            <tr>
+                <th>Date</th>
+                <td>{{ magasinier.date ? magasinier.date|date('d M Y') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Email</th>
+                <td>{{ magasinier.email }}</td>
+            </tr>
+            {# <tr>
+                <th>Password</th>
+                <td>{{ magasinier.password }}</td>
+            </tr> #}
+            <tr>
+                <th>Adresse</th>
+                <td>{{ magasinier.adresse }}</td>
+            </tr>
+            
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_magasinier_index') }}">retour à la liste</a>
+
+    <a href="{{ path('app_magasinier_edit', {'id': magasinier.id}) }}">edit</a>
+
+    {{ include('magasinier/_delete_form.html.twig') }}
+{% endblock %}

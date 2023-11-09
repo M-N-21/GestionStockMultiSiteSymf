@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Magasin {% endblock %}
+
+{% block body %}
+    <h1>Liste des Magasins </h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                {# <th>Id</th> #}
+                <th>Nom</th>
+                <th>Adresse</th>
+                <th>Magasinier</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for magasin in magasins %}
+            <tr>
+                {# <td>{{ magasin.id }}</td> #}
+                <td>{{ magasin.nom }}</td>
+                <td>{{ magasin.adresse }}</td>
+                <td>{{ magasin.magasinier }}</td>
+                <td>
+                    <a class="btn btn-primary" href="{{ path('app_magasin_show', {'id': magasin.id}) }}">show</a>
+                    <a class="btn btn-warning" href="{{ path('app_magasin_edit', {'id': magasin.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">Aucun enregistrement</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_magasin_new') }}">Create new</a>
+{% endblock %}

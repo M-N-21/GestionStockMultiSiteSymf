@@ -27,7 +27,7 @@ class EntreeType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $user = $this->security->getUser();
-        $magasin = $this->magasinRepository->findOneBy(["magasinier" => $this->magasinierRepository->findOneBy(["email" => $user->getEmail()])]);
+        $magasin = $this->magasinRepository->findOneBy(["magasinier" => $this->magasinierRepository->findOneBy(["email" => $user->getUserIdentifier()])]);
         // dd($magasin);
         $builder
             ->add('num_be')

@@ -16,6 +16,7 @@
                 {# <th>Password</th> #}
                 <th>Adresse</th>
                 <th>Magasin</th>
+                {# <th>Gestionnaire</th> #}
                 <th>actions</th>
             </tr>
         </thead>
@@ -30,6 +31,7 @@
                 {# <td>{{ magasinier.password }}</td> #}
                 <td>{{ magasinier.adresse }}</td>
                 <td>{{ magasinier.magasin }}</td>
+                {# <td>{{ magasinier.gestionnaire }}</td> #}
                 <td>
                     <a class="btn btn-primary" href="{{ path('app_magasinier_show', {'id': magasinier.id}) }}">show</a>
                     <a class="btn btn-warning" href="{{ path('app_magasinier_edit', {'id': magasinier.id}) }}">edit</a>

@@ -26,10 +26,14 @@
                 <td>{{ sortie.transfert ? 'Yes' : 'No' }}</td>
                 <td>{{ sortie.prix }}</td>
                 <td>{{ sortie.date ? sortie.date|date('d-m-Y H:i:s') : '' }}</td>
+                {% if not sortie.transfert %}
                 <td>
                     <a href="{{ path('app_sortie_show', {'id': sortie.id}) }}">voir</a>
                     <a href="{{ path('app_sortie_edit', {'id': sortie.id}) }}">editer</a>
                 </td>
+                {% else %}
+                    <td>Transfert</td>
+                {% endif %}
             </tr>
         {% else %}
             <tr>

@@ -31,10 +31,17 @@ class Magasin
     #[ORM\OneToMany(mappedBy: 'magasin', targetEntity: Produit::class)]
     private Collection $produits;
 
+    #[ORM\ManyToOne(inversedBy: 'magasins')]
+    private ?Gestionnaire $gestionnaire = null;
+
+    #[ORM\OneToMany(mappedBy: 'Magasin', targetEntity: Categorie::class)]
+    private Collection $categories;
+
     public function __construct()
     {
         $this->transfertStocks = new ArrayCollection();
         $this->produits = new ArrayCollection();
+        $this->categories = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -140,5 +147,47 @@ class Magasin
     public function __toString()
     {
         return $this->nom." - ". $this->adresse;
+    }
+
+    public function getGestionnaire(): ?Gestionnaire
+    {
+        return $this->gestionnaire;
+    }
+
+    public function setGestionnaire(?Gestionnaire $gestionnaire): static
+    {
+        $this->gestionnaire = $gestionnaire;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Categorie>
+     */
+    public function getCategories(): Collection
+    {
+        return $this->categories;
+    }
+
+    public function addCategory(Categorie $category): static
+    {
+        if (!$this->categories->contains($category)) {
+            $this->categories->add($category);
+            $category->setMagasin($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCategory(Categorie $category): static
+    {
+        if ($this->categories->removeElement($category)) {
+            // set the owning side to null (unless already changed)
+            if ($category->getMagasin() === $this) {
+                $category->setMagasin(null);
+            }
+        }
+
+        return $this;
     }
 }

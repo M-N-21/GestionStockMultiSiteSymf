@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Magasinier;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -14,7 +15,10 @@ class MagasinierType extends AbstractType
         $builder
             ->add('nom')
             ->add('prenom')
-            ->add('date')
+            ->add('date', BirthdayType::class, [
+                'widget' => 'choice', // Utilisez le widget de type choix pour la date de naissance
+                'format' => 'dd MMMM yyyy', // Le format dans lequel la date sera stockée
+            ])
             ->add('email')
             ->add('password')
             ->add('adresse')

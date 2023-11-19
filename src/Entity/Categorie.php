@@ -21,6 +21,9 @@ class Categorie
     #[ORM\OneToMany(mappedBy: 'categorie', targetEntity: Produit::class)]
     private Collection $produits;
 
+    #[ORM\ManyToOne(inversedBy: 'categories')]
+    private ?Magasin $Magasin = null;
+
     public function __construct()
     {
         $this->produits = new ArrayCollection();
@@ -75,5 +78,17 @@ class Categorie
     public function __toString()
     {
         return $this->nom;
+    }
+
+    public function getMagasin(): ?Magasin
+    {
+        return $this->Magasin;
+    }
+
+    public function setMagasin(?Magasin $Magasin): static
+    {
+        $this->Magasin = $Magasin;
+
+        return $this;
     }
 }

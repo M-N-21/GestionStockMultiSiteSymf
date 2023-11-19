@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Commandes{% endblock %}
+
+{% block body %}
+    <h1>Mes Commandes</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Qte</th>
+                <th>Date</th>
+                <th>Produit</th>
+                <th>Etat</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for commande in commandes %}
+            <tr>
+                <td>{{ commande.id }}</td>
+                <td>{{ commande.qte }}</td>
+                <td>{{ commande.date ? commande.date|date('d-m-Y') : '' }}</td>
+                <td>{{ commande.produit }}</td>
+                <td>{{ commande.etat ? 'Valider' : 'En attente' }}</td>
+                {% if not commande.etat %}
+                
+                <td>
+                    <a class="btn btn-primary" href="{{ path('app_commande_show', {'id': commande.id}) }}">voir</a>
+                    <a class="btn btn-warning" href="{{ path('app_commande_edit', {'id': commande.id}) }}">editer</a>
+                </td>
+                {% endif %}
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">Aucun enregistrement</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_commande_new') }}">creer une nouvelle commande</a>
+{% endblock %}

@@ -6,6 +6,7 @@ use App\Entity\Magasin;
 use App\Entity\Magasinier;
 use App\Entity\Produit;
 use App\Form\ProduitType;
+use App\Repository\GestionnaireRepository;
 use App\Repository\MagasinierRepository;
 use App\Repository\MagasinRepository;
 use App\Repository\ProduitRepository;
@@ -24,12 +25,13 @@ class ProduitController extends AbstractController
     public function index(ProduitRepository $produitRepository, MagasinierRepository $magasinierRepository): Response
     {
         return $this->render('produit/index.html.twig', [
-            'produits' => $produitRepository->findBy(["magasin" => $magasinierRepository->findOneBy(["email" => $this->getUser()->getEmail()])->getMagasin()]),
+            'produits' => $produitRepository->findBy(["magasin" => $magasinierRepository->findOneBy(["email" => $this->getUser()->getUserIdentifier()])->getMagasin()]),
+            'voir' => 'oui',
         ]);
     }
 
     #[Route('/new', name: 'app_produit_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager, MagasinierRepository $magasinierRepository, MagasinRepository $magasinRepository): Response
+    public function new(Request $request, EntityManagerInterface $entityManager, MagasinierRepository $magasinierRepository, MagasinRepository $magasinRepository, GestionnaireRepository $gestionnaireRepository): Response
     {
         $produit = new Produit();
         $form = $this->createForm(ProduitType::class, $produit);
@@ -39,9 +41,11 @@ class ProduitController extends AbstractController
             $produit->setDate(new DateTime());
             $produit->setUser($this->getUser());
             $mail = $this->getUser();
-            $produit->setMagasin($magasinierRepository->findOneBy(["email" => $mail])->getMagasin());
-            // dd();
-            $magasins = $magasinRepository->findall();
+            $gestionnaire = $gestionnaireRepository->findOneBy(["email" => $magasinierRepository->findOneBy(["email" => $mail->getUserIdentifier()])->getGestionnaire()->getEmail() ]);
+            // dd($magasinierRepository->findOneBy(["email" => $mail])->getMagasin());
+            
+            $produit->setMagasin($magasinierRepository->findOneBy(["email" => $mail->getUserIdentifier()])->getMagasin());
+            $magasins = $magasinRepository->findBy(["gestionnaire" => $gestionnaire]);
             $produits[] = $produit;
             // dd($magasins);
             foreach ($magasins as $m){
@@ -72,6 +76,7 @@ class ProduitController extends AbstractController
         return $this->render('produit/new.html.twig', [
             'produit' => $produit,
             'form' => $form,
+            'voir' => 'oui',
         ]);
     }
 
@@ -98,6 +103,7 @@ class ProduitController extends AbstractController
         return $this->render('produit/edit.html.twig', [
             'produit' => $produit,
             'form' => $form,
+            'voir' => 'oui',
         ]);
     }
 

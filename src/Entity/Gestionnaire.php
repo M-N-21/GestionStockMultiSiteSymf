@@ -37,9 +37,17 @@ class Gestionnaire
         #[ORM\OneToMany(mappedBy: 'gestionnaire', targetEntity: TransfertStock::class)]
     private Collection $transfertStocks;
 
+        #[ORM\OneToMany(mappedBy: 'gestionnaire', targetEntity: Magasinier::class)]
+        private Collection $magasiniers;
+
+        #[ORM\OneToMany(mappedBy: 'gestionnaire', targetEntity: Magasin::class)]
+        private Collection $magasins;
+
     public function __construct()
     {
         $this->transfertStocks = new ArrayCollection();
+        $this->magasiniers = new ArrayCollection();
+        $this->magasins = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -153,5 +161,65 @@ class Gestionnaire
     public function __toString()
     {
         return $this->prenom." ".$this->nom." - ".$this->email;
+    }
+
+    /**
+     * @return Collection<int, Magasinier>
+     */
+    public function getMagasiniers(): Collection
+    {
+        return $this->magasiniers;
+    }
+
+    public function addMagasinier(Magasinier $magasinier): static
+    {
+        if (!$this->magasiniers->contains($magasinier)) {
+            $this->magasiniers->add($magasinier);
+            $magasinier->setGestionnaire($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMagasinier(Magasinier $magasinier): static
+    {
+        if ($this->magasiniers->removeElement($magasinier)) {
+            // set the owning side to null (unless already changed)
+            if ($magasinier->getGestionnaire() === $this) {
+                $magasinier->setGestionnaire(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Magasin>
+     */
+    public function getMagasins(): Collection
+    {
+        return $this->magasins;
+    }
+
+    public function addMagasin(Magasin $magasin): static
+    {
+        if (!$this->magasins->contains($magasin)) {
+            $this->magasins->add($magasin);
+            $magasin->setGestionnaire($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMagasin(Magasin $magasin): static
+    {
+        if ($this->magasins->removeElement($magasin)) {
+            // set the owning side to null (unless already changed)
+            if ($magasin->getGestionnaire() === $this) {
+                $magasin->setGestionnaire(null);
+            }
+        }
+
+        return $this;
     }
 }

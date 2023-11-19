@@ -27,7 +27,7 @@ class SortieType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $user = $this->security->getUser();
-        $magasin = $this->magasinRepository->findOneBy(["magasinier" => $this->magasinierRepository->findOneBy(["email" => $user->getEmail()])]);
+        $magasin = $this->magasinRepository->findOneBy(["magasinier" => $this->magasinierRepository->findOneBy(["email" => $user->getUserIdentifier()])]);
         $builder
             ->add('num_bs')
             ->add('qteSortie')

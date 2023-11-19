@@ -2,9 +2,8 @@
 
 namespace App\Form;
 
-use App\Entity\Categorie;
+use App\Entity\Commande;
 use App\Entity\Produit;
-use App\Repository\GestionnaireRepository;
 use App\Repository\MagasinierRepository;
 use App\Repository\MagasinRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -13,7 +12,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class ProduitType extends AbstractType
+class CommandeType extends AbstractType
 {
     private $security;
     private $magasinierRepository;
@@ -29,33 +28,28 @@ class ProduitType extends AbstractType
         $user = $this->security->getUser();
         $magasinier = $this->magasinierRepository->findOneBy(["email" => $user->getUserIdentifier()]);
         $magasin = $this->magasinRepository->findOneBy(["magasinier" => $magasinier]);
-        // dd($magasin,$magasinier);
+
         $builder
-            ->add('nom')
-            ->add('prix')
-            ->add('code')
-            ->add('qte')
-            ->add('seuil')
             // ->add('date')
-            // ->add('gestionnaire')
+            // ->add('etat')
             // ->add('magasinier')
-            ->add('categorie', EntityType::class, [
-                'class' => Categorie::class,
+            ->add('produit', EntityType::class, [
+                'class' => Produit::class,
                 'query_builder' => function (\Doctrine\ORM\EntityRepository $er) use ($magasin) {
                     return $er->createQueryBuilder('p')
-                        ->where('p.Magasin = :magasin')
+                        ->where('p.magasin = :magasin')
                         ->setParameter('magasin', $magasin);
                 },
-                'placeholder' => 'Choisir une categorie'
+                'placeholder' => 'Choisir un produit',
             ])
-            // ->add('magasin')
+            ->add('qte')
         ;
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => Produit::class,
+            'data_class' => Commande::class,
         ]);
     }
 }

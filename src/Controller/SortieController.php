@@ -12,6 +12,8 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Email;
 use Symfony\Component\Routing\Annotation\Route;
 
 #[Route('/sortie')]
@@ -21,7 +23,7 @@ class SortieController extends AbstractController
     public function index(SortieRepository $sortieRepository, MagasinierRepository $magasinierRepository,ProduitRepository $produitRepository): Response
     {
         $sorties = [];
-        $produits = $produitRepository->findBy(["magasin" => $magasinierRepository->findOneBy(["email" => $this->getUser()->getEmail()])->getMagasin()]);
+        $produits = $produitRepository->findBy(["magasin" => $magasinierRepository->findOneBy(["email" => $this->getUser()->getUserIdentifier()])->getMagasin()]);
         $listesorties = $sortieRepository->findAll();
         foreach ($listesorties as $s) {
             foreach ($produits as $p) {
@@ -32,11 +34,12 @@ class SortieController extends AbstractController
         }
         return $this->render('sortie/index.html.twig', [
             'sorties' => $sorties,
+            'voir' => 'oui',
         ]);
     }
 
     #[Route('/new', name: 'app_sortie_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager,ProduitRepository $produitRepository ): Response
+    public function new(Request $request, EntityManagerInterface $entityManager,ProduitRepository $produitRepository, MailerInterface $mailer): Response
     {
         $sortie = new Sortie();
         $form = $this->createForm(SortieType::class, $sortie);
@@ -55,7 +58,27 @@ class SortieController extends AbstractController
                     $entityManager->flush();
                     $this->addFlash("success","Sortie effectuée avec succès!");
                     $this->addFlash("success","Le stock du produit ".$produit." a été mis à jour!");
-                return $this->redirectToRoute('app_sortie_index', [], Response::HTTP_SEE_OTHER);    
+                    
+                    // Envoi d'un e-mail
+                    // $email = (new Email())
+                    // ->from('modyndiaye416@gmail.com')
+                    // ->to('endiayeisidk@groupeisi.com')
+                    //->cc('cc@example.com')
+                    //->bcc('bcc@example.com')
+                    //->replyTo('fabien@example.com')
+                    //->priority(Email::PRIORITY_HIGH)
+                    // ->subject('Alert!')
+                    // ->text('Seuil du produit!')
+                    // ->html('<p>See Twig integration for better HTML integration!</p>');
+                    // try {
+                    //     $mailer->send($email);
+                    // } catch (\Throwable $th) {
+                    //     dd("errer");
+                    // }
+                    if ($produit->getQte() <= $produit->getSeuil()) {
+                        $this->addFlash("warning","Le seuil du produit".$produit." a été atteint ou dépassé!\nVeuillez faire une commande!");
+                    }
+                    return $this->redirectToRoute('app_sortie_index', [], Response::HTTP_SEE_OTHER);    
                 }else{
                     $this->addFlash("error","Le Stock disponible pour ce produit est inférieur à la quantite de la sortie!");
                 }
@@ -68,6 +91,7 @@ class SortieController extends AbstractController
         return $this->render('sortie/new.html.twig', [
             'sortie' => $sortie,
             'form' => $form,
+            'voir' => 'oui',
         ]);
     }
 
@@ -107,6 +131,7 @@ class SortieController extends AbstractController
         return $this->render('sortie/edit.html.twig', [
             'sortie' => $sortie,
             'form' => $form,
+            'voir' => 'oui',
         ]);
     }
 

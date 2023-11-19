@@ -22,7 +22,7 @@ class EntreeController extends AbstractController
     {
         // $user = $this->getUser();
         $entrees = [];
-        $produits = $produitRepository->findBy(["magasin" => $magasinierRepository->findOneBy(["email" => $this->getUser()->getEmail()])->getMagasin()]);
+        $produits = $produitRepository->findBy(["magasin" => $magasinierRepository->findOneBy(["email" => $this->getUser()->getUserIdentifier()])->getMagasin()]);
         $listeentrees = $entreeRepository->findAll();
         foreach ($listeentrees as $e) {
             foreach ($produits as $p) {
@@ -33,6 +33,7 @@ class EntreeController extends AbstractController
         }
         return $this->render('entree/index.html.twig', [
             'entrees' => $entrees,
+            'voir' => 'oui',
 
         ]);
     }
@@ -66,6 +67,7 @@ class EntreeController extends AbstractController
         return $this->render('entree/new.html.twig', [
             'entree' => $entree,
             'form' => $form,
+            'voir' => 'oui',
         ]);
     }
 
@@ -100,6 +102,7 @@ class EntreeController extends AbstractController
         return $this->render('entree/edit.html.twig', [
             'entree' => $entree,
             'form' => $form,
+            'voir' => 'oui',
         ]);
     }
 

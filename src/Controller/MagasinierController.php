@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Magasinier;
 use App\Entity\User;
 use App\Form\MagasinierType;
+use App\Repository\GestionnaireRepository;
 use App\Repository\MagasinierRepository;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -18,15 +19,17 @@ use Symfony\Component\Routing\Annotation\Route;
 class MagasinierController extends AbstractController
 {
     #[Route('/', name: 'app_magasinier_index', methods: ['GET'])]
-    public function index(MagasinierRepository $magasinierRepository,UserPasswordHasherInterface $userPasswordHasher): Response
+    public function index(MagasinierRepository $magasinierRepository,UserPasswordHasherInterface $userPasswordHasher, GestionnaireRepository $gestionnaireRepository): Response
     {
+        $user = $this->getUser();
+        $gestionnaire = $gestionnaireRepository->findOneBy(["email" => $user->getUserIdentifier()]);
         return $this->render('magasinier/index.html.twig', [
-            'magasiniers' => $magasinierRepository->findAll(),
+            'magasiniers' => $magasinierRepository->findBy(["gestionnaire" => $gestionnaire]),
         ]);
     }
 
     #[Route('/new', name: 'app_magasinier_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager,UserPasswordHasherInterface $userPasswordHasher): Response
+    public function new(Request $request, EntityManagerInterface $entityManager,UserPasswordHasherInterface $userPasswordHasher, GestionnaireRepository $gestionnaireRepository): Response
     {
         $magasinier = new Magasinier();
         $form = $this->createForm(MagasinierType::class, $magasinier);
@@ -44,6 +47,7 @@ class MagasinierController extends AbstractController
             $user->setEmail($magasinier->getEmail());
             $user->setRoles($roles);
             $magasinier->setPassword($user->getPassword());
+            $magasinier->setGestionnaire($gestionnaireRepository->findOneBy(["email" => $this->getUser()->getUserIdentifier()]));
             $entityManager->persist($magasinier);
             try {
                 $entityManager->persist($user);

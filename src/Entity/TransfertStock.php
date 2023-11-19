@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\TransfertStockRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: TransfertStockRepository::class)]
 class TransfertStock
@@ -32,6 +33,10 @@ class TransfertStock
     #[ORM\ManyToOne(inversedBy: 'transfertStocks')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Magasin $magasinDestination = null;
+
+    #[ORM\Column]
+    #[Assert\GreaterThan(value:0, message:"La quantite minimale est de 1")]
+    private ?int $qte = null;
 
     public function getId(): ?int
     {
@@ -94,6 +99,18 @@ class TransfertStock
     public function setMagasinDestination(?Magasin $magasinDestination): static
     {
         $this->magasinDestination = $magasinDestination;
+
+        return $this;
+    }
+
+    public function getQte(): ?int
+    {
+        return $this->qte;
+    }
+
+    public function setQte(int $qte): static
+    {
+        $this->qte = $qte;
 
         return $this;
     }

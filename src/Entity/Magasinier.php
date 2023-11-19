@@ -37,8 +37,15 @@ class Magasinier
     #[ORM\OneToOne(mappedBy: 'magasinier', cascade: ['persist', 'remove'])]
     private ?Magasin $magasin = null;
 
+    #[ORM\ManyToOne(inversedBy: 'magasiniers')]
+    private ?Gestionnaire $gestionnaire = null;
+
+    #[ORM\OneToMany(mappedBy: 'magasinier', targetEntity: Commande::class)]
+    private Collection $commandes;
+
     public function __construct()
     {
+        $this->commandes = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -137,5 +144,47 @@ class Magasinier
     public function __toString()
     {
         return $this->prenom." ".$this->nom." - ".$this->email;
+    }
+
+    public function getGestionnaire(): ?Gestionnaire
+    {
+        return $this->gestionnaire;
+    }
+
+    public function setGestionnaire(?Gestionnaire $gestionnaire): static
+    {
+        $this->gestionnaire = $gestionnaire;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Commande>
+     */
+    public function getCommandes(): Collection
+    {
+        return $this->commandes;
+    }
+
+    public function addCommande(Commande $commande): static
+    {
+        if (!$this->commandes->contains($commande)) {
+            $this->commandes->add($commande);
+            $commande->setMagasinier($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCommande(Commande $commande): static
+    {
+        if ($this->commandes->removeElement($commande)) {
+            // set the owning side to null (unless already changed)
+            if ($commande->getMagasinier() === $this) {
+                $commande->setMagasinier(null);
+            }
+        }
+
+        return $this;
     }
 }

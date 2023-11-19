@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des Commandes{% endblock %}
+
+{% block body %}
+    <h1>Liste des Commandes</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Qte</th>
+                <th>Date</th>
+                <th>Produit</th>
+                <th>Etat</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for commande in commandes %}
+            <tr>
+                <td>{{ commande.id }}</td>
+                <td>{{ commande.qte }}</td>
+                <td>{{ commande.date ? commande.date|date('d-m-Y') : '' }}</td>
+                <td>{{ commande.produit }}</td>
+                <td>{{ commande.etat ? 'Validé' : 'En attente' }}</td>
+                {% if not commande.etat %}
+                
+                    <td>
+                        <a class="btn btn-success" href="{{ path('app_commande_valider', {'id': commande.id}) }}">valider</a>
+                        {# <a href="{{ path('app_commande_edit', {'id': commande.id}) }}">edit</a> #}
+                    </td>
+                {% endif %}
+                {% if commande.etat %}
+                
+                    <td>
+                        <a class="btn btn-danger" href="{{ path('app_commande_annuler', {'id': commande.id}) }}">Annuler</a>
+                        {# <a href="{{ path('app_commande_edit', {'id': commande.id}) }}">edit</a> #}
+                    </td>
+                {% endif %}
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">Aucun enregistrement</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    {# <a href="{{ path('app_commande_new') }}">Create new</a> #}
+{% endblock %}

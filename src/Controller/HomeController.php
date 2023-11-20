@@ -22,18 +22,23 @@ class HomeController extends AbstractController
                 'voir' => 'oui',
             ]);
         }else{
-            // dd($magasinier->getMagasin());
-            if ($magasinier->getMagasin() == null){
-                $this->addFlash('warning', 'Aucun magasin ne vous a été attribué veuillez contacter votre gestionnaire');
+            if ($magasinier != null) {
+                // dd($magasinier->getMagasin());
+                if ($magasinier->getMagasin() == null){
+                    $this->addFlash('warning', 'Aucun magasin ne vous a été attribué veuillez contacter votre gestionnaire');
+                    return $this->render('home/index.html.twig', [
+                        'voir' => 'non',
+                    ]);
+                }else{
+                    return $this->render('home/index.html.twig', [
+                        'voir' => 'oui',
+                    ]);
+                }
+            }else{
                 return $this->render('home/index.html.twig', [
                     'voir' => 'non',
                 ]);
-            }else{
-                return $this->render('home/index.html.twig', [
-                    'voir' => 'oui',
-                ]);
             }
-            
         }
         
     }

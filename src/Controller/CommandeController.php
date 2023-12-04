@@ -69,6 +69,7 @@ class CommandeController extends AbstractController
     {
         return $this->render('commande/show.html.twig', [
             'commande' => $commande,
+            'voir' => 'oui',
         ]);
     }
 
@@ -87,6 +88,7 @@ class CommandeController extends AbstractController
         return $this->render('commande/edit.html.twig', [
             'commande' => $commande,
             'form' => $form,
+            'voir' => 'oui',
         ]);
     }
 

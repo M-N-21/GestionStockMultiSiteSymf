@@ -33,6 +33,9 @@ class Sortie
     #[ORM\JoinColumn(nullable: false)]
     private ?Produit $produit = null;
 
+    #[ORM\Column(length: 50, nullable: true)]
+    private ?string $destinataire = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -106,6 +109,18 @@ class Sortie
     public function setProduit(?Produit $produit): static
     {
         $this->produit = $produit;
+
+        return $this;
+    }
+
+    public function getDestinataire(): ?string
+    {
+        return $this->destinataire;
+    }
+
+    public function setDestinataire(?string $destinataire): static
+    {
+        $this->destinataire = $destinataire;
 
         return $this;
     }

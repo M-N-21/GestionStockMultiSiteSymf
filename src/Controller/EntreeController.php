@@ -76,6 +76,7 @@ class EntreeController extends AbstractController
     {
         return $this->render('entree/show.html.twig', [
             'entree' => $entree,
+            'voir' => 'oui',
         ]);
     }
 

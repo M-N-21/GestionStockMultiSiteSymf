@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+  <title>Bon de Sortie</title>
+</head>
+<body>
+
+<div class="container mt-5">
+  <div class="card">
+    <div class="card-header">
+      <h5 class="card-title text-center">BON DE SORTIE</h5>
+    </div>
+    <div class="card-body">
+      <p class="card-text">Date : {{sortie.date|date('d/m/Y')}}</p>
+
+      <h6 class="card-subtitle mb-2 text-muted">DÉTAILS DE LA SORTIE :</h6>
+      <ul>
+        <li>Destinataire      : {{sortie.destinataire}}</li>
+        <li>Numéro de sortie  : {{sortie.numBs}}</li>
+      </ul>
+
+      <ul>
+        <li>Produit     : {{sortie.produit}}</li>
+        <li>Quantité    : {{sortie.qteSortie}}</li>
+        <li>Prix        : {{sortie.prix}}</li>
+        {# <li>Date        : </li> #}
+      </ul>
+
+      <p class="card-text">Remarques : </p>
+
+      <p class="card-text">Émis par :</p>
+      <p class="card-text">{{sortie.produit.magasin.magasinier}}<br>Magasinier<br>{{sortie.produit.magasin}}</p>
+    </div>
+  </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+  <title>Bon d'Entree</title>
+</head>
+<body>
+
+<div class="container mt-5">
+  <div class="card">
+    <div class="card-header">
+      <h5 class="card-title text-center">Accusé de Réception du Produit</h5>
+    </div>
+    <div class="card-body">
+      <p class="card-text">Bonjour {{entree.fournisseur}},</p>
+
+      <p class="card-text">Nous vous informons que nous avons bien réceptionné le produit enregistré à la date du {{entree.date|date('d/m/Y')}}. Le colis a été reçu en bon état, et nous avons procédé à la vérification de son contenu.</p>
+
+      <h6 class="card-subtitle mb-2 text-muted">Détails de la Réception :</h6>
+      <ul>
+        <li>Numero Bon     : {{entree.numBe}}</li>
+        <li>Produit     : {{entree.produit}}</li>
+        <li>Quantité    : {{entree.qteEntree}}</li>
+        <li>Prix    : {{entree.prix}}</li>
+        {# <li>Date        : </li> #}
+      </ul>
+
+      <p class="card-text">Nous tenons à vous assurer que nous accorderons toute l'attention nécessaire au traitement de cette réception. Si des problèmes devaient survenir ou si des éléments supplémentaires étaient nécessaires, nous ne manquerons pas de vous contacter dans les plus brefs délais.</p>
+
+      <p class="card-text">Nous vous remercions pour la qualité du service que vous avez fourni jusqu'à présent, et restons à votre disposition pour toute question ou clarification.</p>
+
+      <p class="card-text">Cordialement,</p>
+      <p class="card-text">{{entree.produit.magasin.magasinier}}<br>Magasinier<br>{{entree.produit.magasin}}</p>
+    </div>
+  </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+</body>
+</html>

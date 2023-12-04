@@ -43,7 +43,8 @@ class SortieType extends AbstractType
                 },
                 'placeholder' => 'Choisir un produit',
                 // 'choice_label' => 'name', // Replace with the property of your Product entity to display
-            ]);
+            ])
+            ->add('destinataire')
         ;
     }
 

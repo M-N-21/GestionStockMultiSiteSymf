@@ -79,13 +79,21 @@ class TransfertStockController extends AbstractController
                         // $lastentree= null;
                         $lastentree= $entreeRepository->findOneBy([],['id' => 'DESC']);
                         // dd($lastentree);
-                        $entree->setNumBe($lastentree->getNumBe()+1);
+                        if ($lastentree != null) {
+                            $entree->setNumBe($lastentree->getNumBe()+1);
+                        }else{
+                            $entree->setNumBe(1);
+                        }
                         $entree->setProduit($produitd);
                         $entree->setTransfert(true);
                         $sortie->setDate(new DateTime("now", new DateTimeZone("UTC")));
                         $sortie->setQteSortie($transfertStock->getQte());
                         $lastsortie= $sortieRepository->findOneBy([],['id' => 'DESC']);
-                        $sortie->setNumBs($lastsortie->getNumBs()+1);
+                        if ($lastsortie != null) {
+                            $sortie->setNumBs($lastsortie->getNumBs()+1);
+                        }else{
+                            $sortie->setNumBs(1);
+                        }
                         $sortie->setProduit($produito);
                         $sortie->setTransfert(true);
                         $produitd->setQte($produitd->getQte()+$transfertStock->getQte());

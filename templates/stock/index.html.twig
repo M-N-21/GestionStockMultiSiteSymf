@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Stock{% endblock %}
+
+{% block body %}
+    <h1>Mon Stock</h1>
+    <div align="right">
+        <a class="btn btn-secondary right" href="{{ path('app_pdf_generator_stock') }}">imprimer</a>
+
+    </div>
+
+    <table class="table table-responsive-md">
+        <thead>
+            <tr>
+                {# <th>Id</th> #}
+                <th>Nom</th>
+                <th>Prix</th>
+                <th>Code</th>
+                {% for m in magasins %}
+                    <th>Qte {{ m.nom }}</th>
+                {% endfor %}
+                
+                <th>Seuil</th>
+                <th>Categorie</th>
+                {# <th>Date</th> #}
+            </tr>
+        </thead>
+        <tbody>
+        {% for produit in magasins[0].produits %}
+            <tr>
+                {# <td>{{ produit.id }}</td> #}
+                <td>{{ produit.nom }}</td>
+                <td>{{ produit.prix }}</td>
+                <td>{{ produit.code }}</td>
+                {% for s in stock %}
+                    <td>{{s.qte}}</td>
+                {% endfor %}
+                
+                <td>{{ produit.seuil }}</td>
+                <td>{{ produit.categorie }}</td>
+                {# <td>{{ produit.date ? produit.date|date('Y-m-d') : '' }}</td> #}
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="8">Aucun produit</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

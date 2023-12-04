@@ -43,9 +43,11 @@ class EntreeType extends AbstractType
                         ->setParameter('magasin', $magasin);
                 },
                 'placeholder' => 'Choisir un produit',
+            
 
                 // 'choice_label' => 'name', // Replace with the property of your Product entity to display
-            ]);
+            ])
+            ->add('fournisseur')
         ;
     }
 

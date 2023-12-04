@@ -11,7 +11,8 @@
                 {# <th>Id</th> #}
                 <th>Num_be</th>
                 <th>QteEntree</th>
-                <th>Transfert</th>
+                <th>Produit</th>
+                {# <th>Transfert</th> #}
                 <th>Prix</th>
                 <th>Date</th>
                 <th>actions</th>
@@ -23,14 +24,16 @@
                 {# <td>{{ entree.id }}</td> #}
                 <td>{{ entree.numBe }}</td>
                 <td>{{ entree.qteEntree }}</td>
-                <td>{{ entree.transfert ? 'Yes' : 'No' }}</td>
+                <td>{{ entree.produit }}</td>
+                {# <td>{{ entree.transfert ? 'Oui' : 'Non' }}</td> #}
                 <td>{{ entree.prix }}</td>
                 <td>{{ entree.date ? entree.date|date('d-m-Y H:i:s') : '' }}</td>
                 {% if not entree.transfert %}
                 
                 <td>
-                    <a class="btn btn-primary" href="{{ path('app_entree_show', {'id': entree.id}) }}">show</a>
-                    <a class="btn btn-warning" href="{{ path('app_entree_edit', {'id': entree.id}) }}">edit</a>
+                    <a class="btn btn-primary" href="{{ path('app_entree_show', {'id': entree.id}) }}">voir</a>
+                    <a class="btn btn-warning" href="{{ path('app_entree_edit', {'id': entree.id}) }}">editer</a>
+                    <a class="btn btn-secondary" href="{{ path('app_pdf_generator', {'id': entree.id}) }}">imprimer</a>
                 </td>
                 {% else %}
                     <td>Transfert</td>

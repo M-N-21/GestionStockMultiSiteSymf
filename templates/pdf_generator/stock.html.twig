@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stock</title>
+</head>
+<body>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+    }
+
+    h1 {
+        text-align: center;
+        color: #007bff; /* Couleur du texte */
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+    }
+
+    th, td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: left;
+    }
+
+    th {
+        background-color: #f2f2f2; /* Couleur de fond des cellules d'en-tête */
+    }
+
+    td {
+        background-color: #fff; /* Couleur de fond des cellules de données */
+    }
+
+    tr:nth-child(even) {
+        background-color: #f9f9f9; /* Couleur de fond des lignes paires */
+    }
+
+    tr:hover {
+        background-color: #e1e1e1; /* Couleur de fond lorsqu'on survole une ligne */
+    }
+
+    td[colspan="8"] {
+        font-style: italic;
+        text-align: center;
+    }
+</style>
+
+    <h1 align="center">Etat Global des Stocks</h1>
+    <table class="table table-responsive-md">
+        <thead>
+            <tr>
+                {# <th>Id</th> #}
+                <th>Nom</th>
+                <th>Prix</th>
+                <th>Code</th>
+                {% for m in magasins %}
+                    <th>Qte {{ m.nom }}</th>
+                {% endfor %}
+                <th>Seuil</th>
+                <th>Categorie</th>
+                {# <th>Date</th> #}
+            </tr>
+        </thead>
+        <tbody>
+        {% for produit in magasins[0].produits %}
+            <tr>
+                {# <td>{{ produit.id }}</td> #}
+                <td>{{ produit.nom }}</td>
+                <td>{{ produit.prix }}</td>
+                <td>{{ produit.code }}</td>
+                {% for s in stock %}
+                    <td>{{s.qte}}</td>
+                {% endfor %}
+                
+                <td>{{ produit.seuil }}</td>
+                <td>{{ produit.categorie }}</td>
+                {# <td>{{ produit.date ? produit.date|date('Y-m-d') : '' }}</td> #}
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="8">Aucun produit</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

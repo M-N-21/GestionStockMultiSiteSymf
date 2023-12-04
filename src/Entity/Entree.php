@@ -33,6 +33,9 @@ class Entree
     #[ORM\JoinColumn(nullable: false)]
     private ?Produit $produit = null;
 
+    #[ORM\Column(length: 50, nullable: true)]
+    private ?string $fournisseur = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -106,6 +109,18 @@ class Entree
     public function setProduit(?Produit $produit): static
     {
         $this->produit = $produit;
+
+        return $this;
+    }
+
+    public function getFournisseur(): ?string
+    {
+        return $this->fournisseur;
+    }
+
+    public function setFournisseur(?string $fournisseur): static
+    {
+        $this->fournisseur = $fournisseur;
 
         return $this;
     }

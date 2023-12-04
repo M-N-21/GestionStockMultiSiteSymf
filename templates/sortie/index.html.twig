@@ -11,7 +11,8 @@
                 {# <th>Id</th> #}
                 <th>Num_bs</th>
                 <th>QteSortie</th>
-                <th>Transfert</th>
+                <th>Produit</th>
+                {# <th>Transfert</th> #}
                 <th>Prix</th>
                 <th>Date</th>
                 <th>actions</th>
@@ -23,13 +24,15 @@
                 {# <td>{{ sortie.id }}</td> #}
                 <td>{{ sortie.numBs }}</td>
                 <td>{{ sortie.qteSortie }}</td>
-                <td>{{ sortie.transfert ? 'Yes' : 'No' }}</td>
+                <td>{{ sortie.produit }}</td>
+                {# <td>{{ sortie.transfert ? 'Yes' : 'No' }}</td> #}
                 <td>{{ sortie.prix }}</td>
                 <td>{{ sortie.date ? sortie.date|date('d-m-Y H:i:s') : '' }}</td>
                 {% if not sortie.transfert %}
                 <td>
-                    <a href="{{ path('app_sortie_show', {'id': sortie.id}) }}">voir</a>
-                    <a href="{{ path('app_sortie_edit', {'id': sortie.id}) }}">editer</a>
+                    <a class="btn btn-primary" href="{{ path('app_sortie_show', {'id': sortie.id}) }}">voir</a>
+                    <a class="btn btn-warning" href="{{ path('app_sortie_edit', {'id': sortie.id}) }}">editer</a>
+                    <a class="btn btn-secondary" href="{{ path('app_pdf_generator_sortie', {'id': sortie.id}) }}">imprimer</a>
                 </td>
                 {% else %}
                     <td>Transfert</td>

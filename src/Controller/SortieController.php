@@ -12,6 +12,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Email;
 use Symfony\Component\Routing\Annotation\Route;
@@ -59,22 +60,30 @@ class SortieController extends AbstractController
                     $this->addFlash("success","Sortie effectuée avec succès!");
                     $this->addFlash("success","Le stock du produit ".$produit." a été mis à jour!");
                     
-                    // Envoi d'un e-mail
                     // $email = (new Email())
                     // ->from('modyndiaye416@gmail.com')
-                    // ->to('endiayeisidk@groupeisi.com')
-                    //->cc('cc@example.com')
-                    //->bcc('bcc@example.com')
-                    //->replyTo('fabien@example.com')
-                    //->priority(Email::PRIORITY_HIGH)
-                    // ->subject('Alert!')
-                    // ->text('Seuil du produit!')
-                    // ->html('<p>See Twig integration for better HTML integration!</p>');
-                    // try {
-                    //     $mailer->send($email);
-                    // } catch (\Throwable $th) {
-                    //     dd("errer");
-                    // }
+                    // ->to('malaminendiaye495@gmail.com')
+                    // ->subject('Test l\'email')
+                    // ->text('jkzhfz zejkvhsjkv zdjkssjdv l\'email');
+
+                    // $mailer->send($email);
+                    
+                    // Envoi d'un e-mail
+                    $email = (new Email())
+                    ->from('modyndiaye416@gmail.com')
+                    ->to('malaminendiaye495@gmail.com')
+                    // ->cc('cc@example.com')
+                    // ->bcc('bcc@example.com')
+                    // ->replyTo('fabien@example.com')
+                    // ->priority(Email::PRIORITY_HIGH)
+                    ->subject('Alert!')
+                    ->text('Seuil du produit!')
+                    ->html('<p>See Twig integration for better HTML integration!</p>');
+                    try {
+                        $mailer->send($email);
+                    } catch (TransportExceptionInterface $e) {
+                        dd($e);
+                    }
                     if ($produit->getQte() <= $produit->getSeuil()) {
                         $this->addFlash("warning","Le seuil du produit".$produit." a été atteint ou dépassé!\nVeuillez faire une commande!");
                     }
@@ -100,6 +109,7 @@ class SortieController extends AbstractController
     {
         return $this->render('sortie/show.html.twig', [
             'sortie' => $sortie,
+            'voir' => 'oui',
         ]);
     }
 

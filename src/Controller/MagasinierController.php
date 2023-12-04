@@ -93,9 +93,10 @@ class MagasinierController extends AbstractController
             );
             // $roles[] = "ROLE_GESTIONNAIRE";
             $user->setEmail($magasinier->getEmail());
-            $user->setPassword($magasinier->getPassword());
+            $magasinier->setPassword($user->getPassword());
             // $user->setRoles($roles);
             $entityManager->persist($user);
+            $entityManager->persist($magasinier);
             $entityManager->flush();
             return $this->redirectToRoute('app_magasinier_index', [], Response::HTTP_SEE_OTHER);
         }
